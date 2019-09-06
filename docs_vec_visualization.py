@@ -15,10 +15,11 @@ import BoST_ as BoST
 from sklearn.manifold import TSNE
 from sklearn.decomposition import PCA
 
-# load topic vectors of documets (BoST)
+
 doc_topic = np.load("BoST_doc_topic_distributions.npy")
 
 # show them
+print("visualizing document vectors of BoST")
 tsne = TSNE(n_components=2, init='pca')
 w1_y1 = tsne.fit_transform(doc_topic)
 plt.figure(figsize=(4,4))
@@ -27,10 +28,11 @@ plt.yticks([])
 plt.scatter(w1_y1[:,0], w1_y1[:,1],s= 1, c='black', alpha=0.6)
 plt.show()
 
-# load topic vectors of documets (LDA)
+
 doc_topic = np.load("LDAdoc_topic_distributions.npy")
 
 # show them
+print("visualizing document vectors of LDA")
 tsne = TSNE(n_components=2, init='pca')
 w1_y1 = tsne.fit_transform(doc_topic)
 plt.figure(figsize=(4,4))
@@ -38,14 +40,3 @@ plt.xticks([])
 plt.yticks([])
 plt.scatter(w1_y1[:,0], w1_y1[:,1],s= 1, c='black', alpha=0.6)
 plt.show()
-
-
-
-
-
-
-
-
-
-
-
