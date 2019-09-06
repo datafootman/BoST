@@ -13,6 +13,4 @@ The test program is the file "test_BoST.py".
 Run "python test_BoST.py" and test the perplexities for C-LDA and traditional LDA.
 
 # Example:
-An example is given to show that how to use the generated vectors (or distributions) with a trained document vectors by BoST and LDA: "BoST_doc_topic_distributions.npy" and "LDAdoc_topic_distributions.npy". 
-
-Running "docs_vec_visualization.py" can see the visualization of document vectors (by t-SNE).
+An example is given in "docs_vec_visualization.py" to show that how to use the generated vectors (or distributions). We provide a visualization example of two trained document vectors by BoST and LDA: "BoST_doc_topic_distributions.npy" and "LDAdoc_topic_distributions.npy". Running "docs_vec_visualization.py" can see the visualization of document vectors (by t-SNE).
