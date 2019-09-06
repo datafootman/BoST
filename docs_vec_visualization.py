@@ -15,7 +15,7 @@ import BoST_ as BoST
 from sklearn.manifold import TSNE
 from sklearn.decomposition import PCA
 
-
+# [doc_num, topics_num]
 doc_topic = np.load("BoST_doc_topic_distributions.npy")
 
 # show them
@@ -28,7 +28,7 @@ plt.yticks([])
 plt.scatter(w1_y1[:,0], w1_y1[:,1],s= 1, c='black', alpha=0.6)
 plt.show()
 
-
+# [doc_num, topics_num]
 doc_topic = np.load("LDAdoc_topic_distributions.npy")
 
 # show them
