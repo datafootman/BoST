@@ -4,7 +4,7 @@ We propose the ``Bag-of-Senses'' (BoS) assumption that a document is consist of 
 # Usage:
 The file tdt2_em_v4_0_100.npy keeps first 100 documents of TDT2 dataset.
 The main program is in the "BoST_.py" file.
-After the training, the topic distribution, word distribution and the parameter mus will be returned and saved under the current folder.
+After the training, the topic distribution, word distribution and the parameter SSWs will be returned and saved under the current folder.
 The test program is the file "test_BoST.py".
 Run "python test_BoST.py" and test the perplexities for C-LDA and traditional LDA.
 
