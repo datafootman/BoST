@@ -19,7 +19,7 @@ from sklearn.decomposition import PCA
 doc_topic = np.load("BoST_doc_topic_distributions.npy")
 
 # show them
-tsne = TSNE(n_components=2)
+tsne = TSNE(n_components=2, init='PCA')
 w1_y1 = tsne.fit_transform(doc_topic)
 plt.figure(figsize=(4,4))
 plt.xticks([])
@@ -31,7 +31,7 @@ plt.show()
 doc_topic = np.load("LDAdoc_topic_distributions.npy")
 
 # show them
-tsne = TSNE(n_components=2)
+tsne = TSNE(n_components=2, init='PCA')
 w1_y1 = tsne.fit_transform(doc_topic)
 plt.figure(figsize=(4,4))
 plt.xticks([])
