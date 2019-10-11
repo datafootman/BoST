@@ -15,41 +15,44 @@ model_name = "BoST_"
 
 # parameter settings and initializations
 # the number of documnets, topics, words and other hyper paramters for dirichlet distribution
-# in this code we use eta to instead of mu mentioned our paper
 start = 9
 end = 1
 data_clip = 100
 data = []
 word_index = dict()
 index_word = dict()
+#create_dictionary(data) 
 docs_num = 1
 topic_num = 1
 words_num = 1
 alpha = 0.05
 beta = 0.05
-etas = [] 
+etas = [] #[1/3, 1/3, 1/3]
 context_len = 10
 iteration_num = 30
 
 # all used distributions
 topic_word = 0*np.ones([1, 1])
-topic_word_list = 0*np.ones([1, 1, 1])
-word_topic_vectors = np.array(topic_word_list).T
+#topic_word_list = 0*np.ones([1, 1, 1])
+#word_topic_vectors = np.array(topic_word_list).T
 doc_topic = 0*np.ones([1, 1])
 docs_list = []
 doc_topic_distributions = []
-topic_word_distributions = []
+#topic_word_distributions = []
 topic_word_distribution = []
 perplexities = []
 per_list = []
 st= 0
 ed= 0
 total_time = 0
-
+# init value
+#etets = [1/2, 1/2]
 
 stop_file = open('stopwords2.txt', 'r')
 readtext = stop_file.read()
 stop_list = readtext.split('\n')
+
+
 
 
 # create dictionary for training data
@@ -88,19 +91,19 @@ def get_a_topic(doc_topic_distribution):
 
 # initialization of all distributions
 def initialize_distributions():
-    global doc_topic_distributions, topic_word_distributions, topic_word_distribution, word_topic_vectors
+    global doc_topic_distributions,  topic_word_distribution#,topic_word_distributions, word_topic_vectors
     doc_topic_distributions.clear()
-    topic_word_distributions.clear()
+#    topic_word_distributions.clear()
     topic_word_distribution.clear()
     for i in range(0, docs_num):
         doc_topic_distributions.append(1./topic_num*np.ones([topic_num]))
-        topics_pdf = [] 
-        for j in range(0, topic_num):
-            topics_pdf.append(1./words_num*np.ones([words_num]))
-        topic_word_distributions.append(topics_pdf)
+#        topics_pdf = [] 
+#        for j in range(0, topic_num):
+#            topics_pdf.append(1./words_num*np.ones([words_num]))
+#        topic_word_distributions.append(topics_pdf)
     for i in range(0, topic_num):
         topic_word_distribution.append(1./words_num*np.ones([words_num]))
-    word_topic_vectors = np.array(topic_word_list).T
+#    word_topic_vectors = np.array(topic_word_list).T
     return
 
 # malloc the memories topic assignments of each word for each document
@@ -155,14 +158,14 @@ def compute_topic_word():
     return
 
 # computer topic word distribution of document d
-def compute_topic_word_list_doc(d):  
-    global docs_list
-    topic_word_list[d] = np.array(topic_word_list[d])
-    topic_word_list[d] = 0*topic_word_list[d]
-    for i in range(len(docs_list)):
-        for j in range(0, len(docs_list[i])):
-            topic_word_list[d][docs_list[i][j][1]][docs_list[i][j][0]] += 1
-    return
+#def compute_topic_word_list_doc(d):  
+#    global docs_list
+#    topic_word_list[d] = np.array(topic_word_list[d])
+#    topic_word_list[d] = 0*topic_word_list[d]
+#    for i in range(len(docs_list)):
+#        for j in range(0, len(docs_list[i])):
+#            topic_word_list[d][docs_list[i][j][1]][docs_list[i][j][0]] += 1
+#    return
 
 # get the number of word w assigned by topic k in document d
 def get_n_d_k(d, w, k):
@@ -272,7 +275,16 @@ def recompute_w_topic_distribution(d, w):
         n_w_k = get_n_w_k(d, w, topic)
         total_n_k = get_total_n_k(d, w, topic)
         context_words = get_context(d, w, context_len)
+#        n_w = get_n_w(d,w)
+#        n_context = get_n_w_context(context_words)
         n_k_context = get_n_k_w_context(context_words, topic)
+#        numerator = compute_numerator2(context_words, docs_list[d][w][0], topic, context_len)
+        
+#        baysian_dominator = (n_d_k + alpha)/(len(docs_list[d]) + topic_num*alpha) + (n_k_context + beta)/(n_context + topic_num*beta) + n_w_k/(n_w + topic_num*beta)
+#        dominator = compute_dominator2(context_words, w, topic, context_len)
+#        etas[d][w][0] = (n_d_k + alpha)/len(docs_list[d]) / baysian_dominator
+#        etas[d][w][1] = (n_k_context + beta)/(n_context + topic_num*beta) / baysian_dominator
+#        etas[d][w][2] = n_w_k/(n_w + topic_num*beta) / baysian_dominator
         p_d_w_k = (n_d_k + alpha)*(etas[d][w][0]*(n_w_k + beta)+1/len(context_words)*etas[d][w][1]*(n_k_context+beta))/(total_n_k + words_num*beta) 
         new_topic_distribution[topic] = p_d_w_k
     new_topic_distribution = new_topic_distribution/new_topic_distribution.sum()   
@@ -281,6 +293,7 @@ def recompute_w_topic_distribution(d, w):
 # recompute etas for word w in document d
 def recompute_etas(d, w, topic):
     global etas
+#    n_d_k = get_n_d_k(d, w, topic)
     n_w_k = get_n_w_k(d, w, topic)
     context_words = get_context(d, w, context_len)
     n_w = get_n_w(d,w)
@@ -369,19 +382,19 @@ def save_result(path):
     return 
 
 def initialize():
-    global topic_word, doc_topic, topic_word_list, etas
+    global topic_word, doc_topic, etas#, topic_word_list
     print("initializing...")
     topic_word = 0*np.ones([topic_num, words_num])
     doc_topic = 0*np.ones([docs_num, topic_num])
-    topic_word_list = 0*np.ones([docs_num, topic_num, words_num])
+#    topic_word_list = 0*np.ones([docs_num, topic_num, words_num])
     initialize_distributions()
     initial_docs_list()
     initialize_values_docs_list()
     initialize_etas()
     compute_doc_topic()
     compute_topic_word()
-    for i in range(0, docs_num):
-        compute_topic_word_list_doc(i)
+#    for i in range(0, docs_num):
+#        compute_topic_word_list_doc(i)
     print("initialization finished")
     return
 
@@ -403,6 +416,7 @@ def get_word_vector_in_document(d, w, wv, d_list, c_len, doc_topic, topic_word, 
 def get_vectors_of_word_text(data, dict_w_index, w_text, d_list, c_len, doc_topic, topic_word, etas):
     vectors_w_1 = []
     vectors_w_2 = []
+#    vectors_w_3 = []
     context_words_list = []
     w_index = dict_w_index[w_text]
     for d in range(0, len(data)):
@@ -415,7 +429,7 @@ def get_vectors_of_word_text(data, dict_w_index, w_text, d_list, c_len, doc_topi
             context_words_list.append(context_words)
     return vectors_w_1, vectors_w_2, context_words_list
     
-# get mus of given word text w
+# get etas of given word text w
 def get_etas_of_word(data, w_text, etas):
     etas_w = []
     for d in range(0, len(data)):
@@ -425,7 +439,7 @@ def get_etas_of_word(data, w_text, etas):
             etas_w.append([d, etas[d][i[0]]])
     return etas_w
 
-def run(t_data, start, end_iter, iterations, save_p, clip, c_len, palpha, pbeta,pgamma):
+def run(t_data, start, end_iter, iterations, save_p, clip, c_len, palpha, pbeta):
     global topic_num, iteration_num, data_clip, data, docs_num, topic_num, words_num, etas, context_len, alpha, beta, etas
     data=t_data
     alpha = palpha
