@@ -29,7 +29,7 @@ plt.scatter(w1_y1[:,0], w1_y1[:,1],s= 1, c='black', alpha=0.6)
 plt.show()
 
 # [doc_num, topics_num]
-doc_topic = np.load("LDAdoc_topic_distributions.npy")
+doc_topic = np.load("LDAdoc_topic_distributions.npy",allow_pickle=True)
 
 # show them
 print("visualizing document vectors of LDA")
