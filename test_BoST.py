@@ -17,6 +17,7 @@ iteration_num = 20
 clip = 20
 palpha = 0.05
 pbeta = 0.05
+pgamma = 0.05
 c_len = 10
 
 # TDT2 Dataset
@@ -30,7 +31,7 @@ t_data = texts[:clip]
 
 save_p = "BoST_EXP" + str(clip)+"_" +str(c_len)+"_"+str(palpha)+"_"+str(pbeta)+"\\"
 # RUN C-LDA
-bost.run(t_data, start, end, iteration_num, save_p, clip, c_len, palpha, pbeta)
+bost.run(t_data, start, end, iteration_num, save_p, clip, c_len, palpha, pbeta, pgamma)
 
 dataset = save_p
 y1 = np.load(str(dataset) +"BoST_per_list"+ str(topics) +".npy",allow_pickle=True)
@@ -43,7 +44,7 @@ plt.legend(loc="upper right")
 plt.show()
 
 save_p2 = "tradition_LDA_EXP" + str(clip)+"_" +str(c_len)+"_"+str(palpha)+"_"+str(pbeta)+"\\"
-t_LDA.run(t_data, start, end, iteration_num, save_p2, clip, c_len, palpha, pbeta)
+t_LDA.run(t_data, start, end, iteration_num, save_p2, clip, c_len, palpha, pbeta, pgamma)
 
 dataset = save_p2
 y2 = np.load(str(dataset) +"LDAper_list"+ str(topics) +".npy",allow_pickle=True)
