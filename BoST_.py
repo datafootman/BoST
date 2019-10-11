@@ -439,8 +439,8 @@ def get_etas_of_word(data, w_text, etas):
             etas_w.append([d, etas[d][i[0]]])
     return etas_w
 
-def run(t_data, start, end_iter, iterations, save_p, clip, c_len, palpha, pbeta):
-    global topic_num, iteration_num, data_clip, data, docs_num, topic_num, words_num, etas, context_len, alpha, beta, etas
+def run(t_data, start, end_iter, iterations, save_p, clip, c_len, palpha, pbeta, pgamma):
+    global topic_num, iteration_num, data_clip, data, docs_num, topic_num, words_num, etas, context_len, alpha, beta,gamma, etas
     data=t_data
     alpha = palpha
     beta = pbeta 
