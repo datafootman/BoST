@@ -16,7 +16,6 @@ end = 1
 iteration_num = 20
 clip = 20
 palpha = 0.05
-pgamma = 0.05
 pbeta = 0.05
 c_len = 10
 
@@ -29,9 +28,9 @@ stop_list = readtext.split('\n')
 texts = [[word for word in line.lower().split() if word not in stop_list] for line in tdt2_data] 
 t_data = texts[:clip]
 
-save_p = "BoST_EXP" + str(clip)+"_" +str(c_len)+"_"+str(palpha)+"_"+str(pbeta)+"_"+str(pgamma)+"\\"
+save_p = "BoST_EXP" + str(clip)+"_" +str(c_len)+"_"+str(palpha)+"_"+str(pbeta)+"\\"
 # RUN C-LDA
-bost.run(t_data, start, end, iteration_num, save_p, clip, c_len, palpha, pbeta, pgamma)
+bost.run(t_data, start, end, iteration_num, save_p, clip, c_len, palpha, pbeta)
 
 dataset = save_p
 y1 = np.load(str(dataset) +"BoST_per_list"+ str(topics) +".npy",allow_pickle=True)
@@ -43,8 +42,8 @@ plt.xlabel(u"Iterations")
 plt.legend(loc="upper right")
 plt.show()
 
-save_p2 = "tradition_LDA_EXP" + str(clip)+"_" +str(c_len)+"_"+str(palpha)+"_"+str(pbeta)+"_"+str(pgamma)+"\\"
-t_LDA.run(t_data, start, end, iteration_num, save_p2, clip, c_len, palpha, pbeta, pgamma)
+save_p2 = "tradition_LDA_EXP" + str(clip)+"_" +str(c_len)+"_"+str(palpha)+"_"+str(pbeta)+"\\"
+t_LDA.run(t_data, start, end, iteration_num, save_p2, clip, c_len, palpha, pbeta)
 
 dataset = save_p2
 y2 = np.load(str(dataset) +"LDAper_list"+ str(topics) +".npy",allow_pickle=True)
