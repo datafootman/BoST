@@ -16,7 +16,7 @@ from sklearn.manifold import TSNE
 from sklearn.decomposition import PCA
 
 # [doc_num, topics_num]
-doc_topic = np.load("BoST_doc_topic_distributions.npy")
+doc_topic = np.load("BoST_doc_topic_distributions.npy",allow_pickle=True)
 
 # show them
 print("visualizing document vectors of BoST")
